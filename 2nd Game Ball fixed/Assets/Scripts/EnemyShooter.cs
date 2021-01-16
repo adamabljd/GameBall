@@ -15,7 +15,7 @@ public class EnemyShooter : MonoBehaviour
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        InvokeRepeating("Bullet", 2f, 4f);
+        InvokeRepeating("Bullet", 0.25f, 2f);
 
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-    public float speed = 10f;
+    [SerializeField] float speed = 15f;
     private float mapRange = 151;
     void Start()
     {
@@ -14,8 +14,7 @@ public class Fire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-        GameObject player = GameObject.Find("Player");
+       //Moves forward
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
         
         

@@ -13,23 +13,27 @@ public class SpawnManager : MonoBehaviour
     private float spawnRangeX = 73f;
     private float spawnRangeZ = 73f;
 
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
         float spawnTimeEnemy1 = 3f;
-        float repeatTimeEnemy1 = Random.Range(5f, 10f);
-        float spawnTimeEnemy2 = 30f;
-        float repeatTimeEnemy2 = Random.Range(7f, 13f);
+        float repeatTimeEnemy1 = Random.Range(3f, 6f);
+        float spawnTimeEnemy2 = 40f;
+        float repeatTimeEnemy2 = Random.Range(6f, 10f);
 
         float spawnTimePowerUp = Random.Range(3f, 5f);
         float repeatTimePowerUp = Random.Range(5f, 7f);
 
-        InvokeRepeating("SpawnEnemy", spawnTimeEnemy1, repeatTimeEnemy1);
-        InvokeRepeating("SpawnPowerUp", spawnTimePowerUp, repeatTimePowerUp);
-        InvokeRepeating("SpawnEnemyShooter", spawnTimeEnemy2, repeatTimeEnemy2);
+        if (gameManager.isGameOver == false)
+        {
+            InvokeRepeating("SpawnEnemy", spawnTimeEnemy1, repeatTimeEnemy1);
+            InvokeRepeating("SpawnEnemyShooter", spawnTimeEnemy2, repeatTimeEnemy2);
 
-
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+            InvokeRepeating("SpawnPowerUp", spawnTimePowerUp, repeatTimePowerUp);
+        }
     }
 
     // Update is called once per frame

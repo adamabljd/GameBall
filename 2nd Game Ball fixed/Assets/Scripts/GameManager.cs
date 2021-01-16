@@ -7,13 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public TextMeshProUGUI powerUpText;
-    //public Button startButton;
-    public Button restartButton;
-    public TextMeshProUGUI gameOverText;
-    public TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI powerUpText;
+    [SerializeField] Button restartButton;
+    [SerializeField] TextMeshProUGUI gameOverText;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI healthText;
     private GameObject player;
-    public GameObject titleScreen;
+    [SerializeField] GameObject titleScreen;
+    [SerializeField] TextMeshProUGUI newEIText;
     [SerializeField] float mapRange = 151f;
 
     public bool isGameOver = true;
@@ -23,6 +24,11 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         player = GameObject.Find("Player");
+
+    }
+    private void Start()
+    {
+       
     }
 
     // Update is called once per frame
@@ -31,6 +37,8 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score;
         GameOver();
         PowerUpIndicator();
+        HealthText();
+
     }
 
     public void GameOver()
@@ -39,7 +47,7 @@ public class GameManager : MonoBehaviour
         if ((player.transform.position.y <= -1 ||
             player.transform.position.x >= mapRange || player.transform.position.x <= -mapRange ||
             player.transform.position.z >= mapRange || player.transform.position.z <= -mapRange) 
-            && isGameOver == false)
+            && isGameOver == false || player.GetComponent<PlayerController>().health <=0)
         {
             isGameOver = true;
             restartButton.gameObject.SetActive(true);
@@ -57,14 +65,14 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         score = 0;
         titleScreen.SetActive(false);
+        StartCoroutine(NewEITimer());
     }
 
     private void PowerUpIndicator()
     {
         if (isGameOver == false)
         {
-            if (/*player.GetComponent<PlayerController>().hasPowerUp1 == true || player.GetComponent<PlayerController>().hasPowerUp2 == true || player.GetComponent<PlayerController>().hasPowerUp3 == true*/
-                player.GetComponent<PlayerController>().hasPowerUp == true)
+            if (player.GetComponent<PlayerController>().hasPowerUp == true)
             {
                 powerUpText.text = "PowerUp: ON";
             }
@@ -73,6 +81,20 @@ public class GameManager : MonoBehaviour
                 powerUpText.text = "PowerUp: OFF";
             }
         }
+    }
+
+    //Set New incoming enemy text active after 40seconds and lasts for 1sec
+    IEnumerator NewEITimer()
+    {
+        yield return new WaitForSeconds(40f);
+        newEIText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        newEIText.gameObject.SetActive(false);
+    }
+
+    private void HealthText()
+    {
+        healthText.text = "Health: " + player.GetComponent<PlayerController>().health;
     }
 }
 

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float forwardSpeed = 25;
-    [SerializeField] float horizontalSpeed = 25;
-    [SerializeField] float powerUpStrengh = 30f;
-    [SerializeField] float jumpForce = 25f;
-    [SerializeField] float dashForce = 20f;
-    [SerializeField] float fasterSpeed = 60f;
-    [SerializeField] float bulletPower = 30f;
+    public float forwardSpeed = 25;
+    public float horizontalSpeed = 25;
+    public float powerUpStrengh = 30f;
+    public float jumpForce = 25f;
+    public float dashForce = 20f;
+    public float fasterSpeed = 60f;
+    public float bulletPower = 30f;
+    public int health = 100;
 
     private float horizontalInput;
     private float forwardInput;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public GameObject enemy;
     public GameManager gameManager;
     public GameObject bullet;
+    public GameObject playerBullet;
 
     public bool hasPowerUp;
     public bool hasPowerUpPush;
@@ -147,10 +149,12 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(PowerUpSpeedCountdown());
         }
 
+        //gets pushed away if it got hit by a bullet
         if (other.CompareTag("Bullet"))
         {
             Vector3 pushAway = (transform.position - other.gameObject.transform.position);
             playerRb.AddForce(pushAway * bulletPower,ForceMode.Impulse );
+            health -= 5;
             Destroy(other.gameObject);
         }
     }
