@@ -8,10 +8,10 @@ TagManager:
   - Ground
   - PowerUpPush
   - PowerUpJump
-  - PowerUpDash
   - PowerUpSpeed
   - EnemyShooter
   - Bullet
+  - PowerUpDash
   layers:
   - Default
   - TransparentFX

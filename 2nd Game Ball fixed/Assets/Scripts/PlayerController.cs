@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float horizontalSpeed = 25;
     public float powerUpStrengh = 30f;
     public float jumpForce = 25f;
-    public float dashForce = 20f;
+    public float teleportForce = 20f;
     public float fasterSpeed = 60f;
     public float bulletPower = 30f;
     public int health = 100;
@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     public GameObject enemy;
     public GameManager gameManager;
     public GameObject bullet;
-    public GameObject playerBullet;
 
     public bool hasPowerUp;
     public bool hasPowerUpPush;
@@ -31,6 +30,7 @@ public class PlayerController : MonoBehaviour
     public bool hasPowerUpDash;
     public bool hasPowerUpSpeed;
     [SerializeField] bool isOnGround = false;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         Dash();
         Jump();
         CheckHasPowerUp();
@@ -90,8 +91,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     private void Dash()
     {
+
         vInput = Input.GetKeyDown(KeyCode.V);
 
         //Dashing when click on V and player is on ground and has PU3
@@ -99,11 +102,12 @@ public class PlayerController : MonoBehaviour
         {
             //Dash
             Debug.Log("V");
-            //playerRb.velocity = focalPoint.transform.forward * dashForce;
-            playerRb.AddForce(focalPoint.transform.forward * dashForce, ForceMode.Impulse);
+            //transform.position += focalPoint.transform.forward * teleportForce;
+            playerRb.MovePosition(playerRb.transform.position + focalPoint.transform.forward * teleportForce * Time.deltaTime);
         }
-
     }
+
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -134,7 +138,7 @@ public class PlayerController : MonoBehaviour
         //add Powerup 3 boost when v press
         if (other.CompareTag("PowerUpDash"))
         {
-            hasPowerUpDash = true;
+            hasPowerUpDash= true;
             hasPowerUp = true;
             Destroy(other.gameObject);
             StartCoroutine(PowerUpDashCountdown());
