@@ -158,7 +158,23 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 pushAway = (transform.position - other.gameObject.transform.position);
             playerRb.AddForce(pushAway * bulletPower,ForceMode.Impulse );
-            health -= 5;
+            if(health > 0)
+            {
+                health -= 5;
+            }
+            Destroy(other.gameObject);
+        }
+
+        //adds +10 health if health > 90 or health becomes 100
+        if (other.CompareTag("PowerUpHeart"))
+        {
+            if(health >= 90 && health < 100)
+            {
+                health = 100;
+            }else if(health < 90 && health > 0)
+            {
+                health += 10;
+            }
             Destroy(other.gameObject);
         }
     }

@@ -44,7 +44,7 @@ public class EnemyShooter : MonoBehaviour
             transform.position.z >= mapRange || transform.position.z <= -mapRange)
         {
             Destroy(gameObject);
-            gameManager.score++;
+            gameManager.score += 4;
         }
     }
 }

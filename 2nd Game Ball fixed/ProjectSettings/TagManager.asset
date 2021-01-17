@@ -12,6 +12,7 @@ TagManager:
   - EnemyShooter
   - Bullet
   - PowerUpDash
+  - PowerUpHeart
   layers:
   - Default
   - TransparentFX
