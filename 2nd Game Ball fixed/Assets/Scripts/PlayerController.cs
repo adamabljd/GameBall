@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float forwardSpeed = 25;
-    public float horizontalSpeed = 25;
+    public float defaultForwardSpeed = 35;
+    public float defaultHorizontalSpeed = 30;
+    public float forwardSpeed = 35;
+    public float horizontalSpeed = 30;
     public float powerUpStrengh = 30f;
     public float jumpForce = 25f;
     public float teleportForce = 20f;
     public float fasterSpeed = 60f;
     public float bulletPower = 30f;
     public int health = 100;
+    public float agility = 0.5f;
+    public float agilitySpeed = 20f;
 
     private float horizontalInput;
     private float forwardInput;
@@ -29,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public bool hasPowerUpJump;
     public bool hasPowerUpDash;
     public bool hasPowerUpSpeed;
+    public bool hasPowerUpAgility;
     [SerializeField] bool isOnGround = false;
 
     // Start is called before the first frame update
@@ -53,11 +58,15 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();
     }
 
+
+
+
     public void PlayerMovement()
     {
         forwardInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
         SpeedPowerUp();
+        AgilityPowerUp();
 
         //Move forward, backwards, left and right
         if (gameManager.isGameOver == false)
@@ -68,46 +77,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void SpeedPowerUp()
-    {
-        //changes speed
-        if (hasPowerUpSpeed)
-        {
-            forwardSpeed = fasterSpeed;
-            horizontalSpeed = fasterSpeed;
-        }
-    }
-
-    private void Jump()
-    {
-        spaceInput = Input.GetKeyDown(KeyCode.Space);
-
-        //Jump when space btn is pressed and when player has PU2 and is colliding with the ground
-        if (spaceInput && hasPowerUpJump && isOnGround)
-        {
-            Debug.Log("space");
-            playerRb.AddForce(focalPoint.transform.up * jumpForce, ForceMode.Impulse);
-            isOnGround = false;
-        }
-    }
 
 
-    private void Dash()
-    {
 
-        vInput = Input.GetKeyDown(KeyCode.V);
 
-        //Dashing when click on V and player is on ground and has PU3
-        if (vInput && isOnGround && hasPowerUpDash)
-        {
-            //Dash
-            Debug.Log("V");
-            //transform.position += focalPoint.transform.forward * teleportForce;
-            playerRb.MovePosition(playerRb.transform.position + focalPoint.transform.forward * teleportForce * Time.deltaTime);
-        }
-    }
 
-    
+
+
+
+
+
+//--------------------------------------------Triggers----------------------------------------------------------------------------------------------
 
     private void OnTriggerEnter(Collider other)
     {
@@ -177,7 +157,23 @@ public class PlayerController : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+
+        //become agile when powerUp4
+        if (other.CompareTag("PowerUpAgility"))
+        {
+            hasPowerUpAgility = true;
+            hasPowerUp = true;
+            Destroy(other.gameObject);
+            StartCoroutine(PowerUpAgilityCountdown());
+        }
     }
+
+
+
+
+
+
+//---------------------------------Collision-----------------------------------------------------------------------------------------------------
 
     public void OnCollisionEnter(Collision collision)
     {
@@ -190,6 +186,68 @@ public class PlayerController : MonoBehaviour
             enemyRigidbody.AddForce(awayFromPlayer * powerUpStrengh, ForceMode.Impulse);
         }
     }
+
+
+
+
+
+
+//-------------------------------------Power Ups Functions-------------------------------------------------------------------------------------------
+
+
+    private void Jump()
+    {
+        spaceInput = Input.GetKeyDown(KeyCode.Space);
+
+        //Jump when space btn is pressed and when player has PU2 and is colliding with the ground
+        if (spaceInput && hasPowerUpJump && isOnGround)
+        {
+            Debug.Log("space");
+            playerRb.AddForce(focalPoint.transform.up * jumpForce, ForceMode.Impulse);
+            isOnGround = false;
+        }
+    }
+
+
+    private void Dash()
+    {
+
+        vInput = Input.GetKeyDown(KeyCode.V);
+
+        //Dashing when click on V and player is on ground and has PU3
+        if (vInput && isOnGround && hasPowerUpDash)
+        {
+            //Dash
+            Debug.Log("V");
+            //transform.position += focalPoint.transform.forward * teleportForce;
+            playerRb.MovePosition(playerRb.transform.position + focalPoint.transform.forward * teleportForce * Time.deltaTime);
+        }
+    }
+
+    private void SpeedPowerUp()
+    {
+        //changes speed
+        if (hasPowerUpSpeed)
+        {
+            forwardSpeed = fasterSpeed;
+            horizontalSpeed = fasterSpeed - 10;
+        }
+    }
+
+
+
+    private void AgilityPowerUp()
+    {
+        //changes agility
+        if (hasPowerUpAgility)
+        {
+            forwardSpeed = agilitySpeed;
+            horizontalSpeed = agilitySpeed;
+            playerRb.mass = agility;
+        }
+    }
+
+    //----------------------------PowerUps Countdown-----------------------------------------------------------------------------------------------------
 
     IEnumerator PowerUpPushCountdown()
     {
@@ -213,14 +271,30 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(20);
         //return speed to normal
-        horizontalSpeed = 25f;
-        forwardSpeed = 25f;
+        horizontalSpeed = defaultHorizontalSpeed;
+        forwardSpeed = defaultForwardSpeed;
         hasPowerUpSpeed = false;
     }
 
+    IEnumerator PowerUpAgilityCountdown()
+    {
+        yield return new WaitForSeconds(20);
+        //return speed to normal
+        horizontalSpeed = defaultForwardSpeed;
+        forwardSpeed = defaultHorizontalSpeed;
+        playerRb.mass = 2;
+        hasPowerUpAgility = false;
+    }
+
+
+
+
+
+//-------------------------------------Others-------------------------------------------------------------------------------------------------------
+
     private void CheckHasPowerUp()
     {
-        if (hasPowerUpPush || hasPowerUpJump || hasPowerUpDash || hasPowerUpSpeed)
+        if (hasPowerUpPush || hasPowerUpJump || hasPowerUpDash || hasPowerUpSpeed || hasPowerUpAgility)
         {
             hasPowerUp = true;
         }else

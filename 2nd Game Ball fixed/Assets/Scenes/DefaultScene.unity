@@ -1019,14 +1019,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9151bb9b56a132541b595ae4af955b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultForwardSpeed: 35
+  defaultHorizontalSpeed: 30
   forwardSpeed: 35
-  horizontalSpeed: 35
+  horizontalSpeed: 30
   powerUpStrengh: 20
   jumpForce: 20
   teleportForce: 800
   fasterSpeed: 60
   bulletPower: 10
   health: 100
+  agility: 0.5
+  agilitySpeed: 20
   enemy: {fileID: 1557531508469130953, guid: 6897cb32e30ef43478b346a3e44c9cd6, type: 3}
   gameManager: {fileID: 0}
   bullet: {fileID: 3349072649180448683, guid: 833e26f2715ef1447925c65199ef838e, type: 3}
@@ -1035,6 +1039,7 @@ MonoBehaviour:
   hasPowerUpJump: 0
   hasPowerUpDash: 0
   hasPowerUpSpeed: 0
+  hasPowerUpAgility: 0
   isOnGround: 1
 --- !u!135 &1021833730
 SphereCollider:
@@ -1453,6 +1458,8 @@ MonoBehaviour:
   - {fileID: 4518805031048538919, guid: 9f11056e278420342a6495de8e6b0550, type: 3}
   - {fileID: 3046971224007373176, guid: 0f3b4fa88a7b4d346b5e035271e02a4d, type: 3}
   - {fileID: 7570177530901630809, guid: 56a4142b6c7e2ec4b8c51534cbc53cf7, type: 3}
+  - {fileID: 2881058595796702638, guid: 904e4b866c291e345afbde582a9fe9b4, type: 3}
+  - {fileID: 1733642346028248825, guid: 8a23f8fd228c7144883a28acd5437269, type: 3}
 --- !u!4 &1154923004
 Transform:
   m_ObjectHideFlags: 0

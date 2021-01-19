@@ -13,6 +13,7 @@ TagManager:
   - Bullet
   - PowerUpDash
   - PowerUpHeart
+  - PowerUpAgility
   layers:
   - Default
   - TransparentFX
