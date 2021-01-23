@@ -1033,13 +1033,13 @@ MonoBehaviour:
   agilitySpeed: 20
   enemy: {fileID: 1557531508469130953, guid: 6897cb32e30ef43478b346a3e44c9cd6, type: 3}
   gameManager: {fileID: 0}
-  bullet: {fileID: 3349072649180448683, guid: 833e26f2715ef1447925c65199ef838e, type: 3}
   hasPowerUp: 0
   hasPowerUpPush: 0
   hasPowerUpJump: 0
   hasPowerUpDash: 0
   hasPowerUpSpeed: 0
   hasPowerUpAgility: 0
+  touchTrap: 0
   isOnGround: 1
 --- !u!135 &1021833730
 SphereCollider:
@@ -1449,6 +1449,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
+  portal: {fileID: 6236288620112643555, guid: 296d9cdf7dd79864ea22e745a3ee46d3, type: 3}
+  trap: {fileID: 2609617774990484986, guid: 9a1e8701077bfca468d5f41f3a24c61c, type: 3}
   enemyPrefab:
   - {fileID: 1557531508469130953, guid: 6897cb32e30ef43478b346a3e44c9cd6, type: 3}
   - {fileID: 7436774358774022102, guid: 817935d7cf621464392646fe1c030dcd, type: 3}

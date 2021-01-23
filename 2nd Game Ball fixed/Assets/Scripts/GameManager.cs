@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
     //Set New incoming enemy text active after 40seconds and lasts for 1sec
     IEnumerator NewEITimer()
     {
-        yield return new WaitForSeconds(39f);
+        yield return new WaitForSeconds(37f);
         newEIText.gameObject.SetActive(true);
         yield return new WaitForSeconds(1f);
         newEIText.gameObject.SetActive(false);

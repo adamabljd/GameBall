@@ -21,12 +21,13 @@ public class PlayerController : MonoBehaviour
     private float forwardInput;
     private bool spaceInput;
     private bool vInput;
+    private float spawnRangeX = 73f;
+    private float spawnRangeZ = 73f;
 
     private Rigidbody playerRb;
     private GameObject focalPoint;
     public GameObject enemy;
     public GameManager gameManager;
-    public GameObject bullet;
 
     public bool hasPowerUp;
     public bool hasPowerUpPush;
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public bool hasPowerUpDash;
     public bool hasPowerUpSpeed;
     public bool hasPowerUpAgility;
+    public bool touchTrap;
     [SerializeField] bool isOnGround = false;
 
     // Start is called before the first frame update
@@ -166,6 +168,23 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             StartCoroutine(PowerUpAgilityCountdown());
         }
+
+        //health -5 if touches trap
+        if (other.CompareTag("Trap"))
+        {
+            if (health > 0)
+            {
+                health -= 5;
+            }
+            Destroy(other.gameObject);
+        }
+
+        //health -5 if touches trap
+        if (other.CompareTag("Portal"))
+        {
+            PortalPlayerPosition();
+            Destroy(other.gameObject);
+        }
     }
 
 
@@ -247,6 +266,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void PortalPlayerPosition()
+    {
+        transform.position = GenerateSpawnPosition();
+    }
+
     //----------------------------PowerUps Countdown-----------------------------------------------------------------------------------------------------
 
     IEnumerator PowerUpPushCountdown()
@@ -301,5 +325,14 @@ public class PlayerController : MonoBehaviour
         {
             hasPowerUp = false;
         }
+    }
+
+    private Vector3 GenerateSpawnPosition()
+    {
+        float spawnPosX = Random.Range(-spawnRangeX, spawnRangeX);
+        float spawnPosZ = Random.Range(-spawnRangeZ, spawnRangeZ);
+
+        Vector3 randomPos = new Vector3(spawnPosX, 1f, spawnPosZ);
+        return randomPos;
     }
 }
