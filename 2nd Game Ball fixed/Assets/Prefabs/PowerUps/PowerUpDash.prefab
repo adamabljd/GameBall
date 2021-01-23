@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8395504412679283500}
   - component: {fileID: 7003974745070573257}
   - component: {fileID: 7299086380780564386}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PowerUpDash
   m_TagString: PowerUpDash
   m_Icon: {fileID: 0}

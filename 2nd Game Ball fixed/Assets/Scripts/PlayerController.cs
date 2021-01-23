@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+
         Dash();
         Jump();
         CheckHasPowerUp();
@@ -204,6 +205,7 @@ public class PlayerController : MonoBehaviour
 
             enemyRigidbody.AddForce(awayFromPlayer * powerUpStrengh, ForceMode.Impulse);
         }
+
     }
 
 
@@ -270,6 +272,8 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = GenerateSpawnPosition();
     }
+
+
 
     //----------------------------PowerUps Countdown-----------------------------------------------------------------------------------------------------
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9057935442970954614}
   - component: {fileID: 4463789863258117930}
   - component: {fileID: 2311726044392322585}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PowerUpAgility
   m_TagString: PowerUpAgility
   m_Icon: {fileID: 0}
